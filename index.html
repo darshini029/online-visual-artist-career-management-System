@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KIRA — Working Preview</title>
+<style>
+:root{--paper:#f7f0e3;--cream:#fffaf0;--beige:#e9ddc8;--ink:#17233b;--coral:#e76f61;--orange:#d96b27;--sun:#f2c94c;--teal:#3c9d9b;--green:#6e9f62;--lav:#9b8cc4;--sky:#75a9d8;--plum:#725b8f;--rose:#d8899b;--mint:#91b9a0;--blue:#4778a9;--brown:#8b654d;--cream2:#f1e5d0}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:linear-gradient(135deg,#f6efe4,#efe5d5);color:var(--ink);font-family:Inter,Arial,Helvetica,sans-serif} .serif{font-family:Georgia,'Times New Roman',serif}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.08;background-image:radial-gradient(var(--ink) .7px,transparent .7px);background-size:7px 7px}
+header{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:30px;padding:15px 5%;background:rgba(247,240,227,.97);border-bottom:2px solid var(--ink)}
+.logo{font-weight:900;font-size:22px;letter-spacing:-1px;white-space:nowrap}.logo span{color:var(--coral)}
+nav{display:flex;gap:20px;flex:1;justify-content:center}nav a{text-decoration:none;color:var(--ink);font-weight:700;font-size:13px}nav a:hover{text-decoration:underline;text-decoration-color:var(--coral);text-decoration-thickness:3px}
+.menu{display:none;border:0;background:none;font-size:24px}.hero{display:grid;grid-template-columns:1fr 1fr;min-height:680px;padding:70px 7%;gap:50px;align-items:center}
+.eyebrow{font:11px monospace;letter-spacing:2px;font-weight:700}.hero h1{font-size:clamp(50px,6.4vw,92px);line-height:.88;letter-spacing:-5px;margin:15px 0 25px;max-width:720px}.hero h1 em{font-family:Georgia,serif;font-weight:400}.lead{font-size:18px;line-height:1.6;max-width:570px}.buttons{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}.btn{border:2px solid var(--ink);padding:14px 18px;font-weight:800;cursor:pointer;text-decoration:none;display:inline-block}.primary{background:var(--coral);color:white}.secondary{background:transparent;color:var(--ink)}
+.desk{height:480px;position:relative;background:var(--beige);border:2px solid var(--ink);transform:rotate(2deg);box-shadow:12px 12px 0 var(--ink);padding:30px}.comic{position:absolute;inset:45px 30px 35px;background:var(--cream);border:2px solid var(--ink);padding:20px;transform:rotate(-4deg)}.comicgrid{display:grid;grid-template-columns:1fr 1fr;gap:7px;height:100%}.panel{border:2px solid var(--ink);background:var(--sun);position:relative}.panel:nth-child(2){background:var(--teal)}.panel:nth-child(3){background:var(--lav)}.panel:nth-child(4){background:var(--coral)}.face{position:absolute;width:70px;height:70px;border:5px solid var(--ink);border-radius:50%;left:50%;top:50%;transform:translate(-50%,-50%)}.bubble{position:absolute;right:18px;top:15px;background:white;border:2px solid var(--ink);padding:12px;border-radius:50%;font-weight:800;transform:rotate(4deg)}.sticky{position:absolute;right:-12px;bottom:20px;background:var(--sun);padding:18px;font-weight:900;transform:rotate(5deg);box-shadow:4px 4px 0 #0003}
+section{padding:75px 7%}.dark{background:var(--ink);color:var(--paper)}h2{font-size:clamp(36px,5vw,64px);line-height:.95;letter-spacing:-3px;margin:10px 0 30px}h2 em{font-family:Georgia,serif;font-weight:400}.choices{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.choice{padding:25px;border:2px solid var(--ink);background:var(--cream);color:var(--ink);font-weight:800;text-align:left;cursor:pointer;font-size:15px}.choice:hover{transform:translateY(-3px) rotate(-.5deg);box-shadow:6px 7px 0 var(--ink)}.choiceResult{margin-top:16px;padding:18px;border:1px dashed currentColor;min-height:55px}
+.journey{display:flex;flex-wrap:wrap;gap:10px;align-items:center}.stage{padding:11px 14px;border:2px solid var(--ink);background:var(--cream);font:700 11px monospace;cursor:pointer}.stage.active,.stage:hover{background:var(--sun)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:start}.card{background:var(--cream);border:2px solid var(--ink);padding:28px;box-shadow:8px 8px 0 var(--ink)}label{display:block;font:700 11px monospace;margin:0 0 15px}select,input{width:100%;margin-top:7px;padding:12px;border:2px solid var(--ink);background:var(--paper);color:var(--ink);font:inherit}.result{margin-top:16px;line-height:1.5}
+.pubgrid,.jobs,.studio{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.pub{padding:24px;border:2px solid var(--ink);background:var(--cream);min-height:190px}.pub:nth-child(2){transform:rotate(1deg)}.pub:nth-child(3){transform:rotate(-1deg)}
+.job{border:2px solid var(--ink);background:var(--cream);padding:22px;min-height:210px;position:relative}.tag{font:10px monospace;background:var(--sun);padding:5px}.job h3{font-size:22px}.save{position:absolute;bottom:18px;left:18px;border:0;background:none;font-weight:800;cursor:pointer}
+.community{background:var(--coral)}.wall{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.post{padding:25px;min-height:170px;border:2px solid var(--ink);background:var(--cream);box-shadow:7px 7px 0 var(--ink)}.post:nth-child(2){background:var(--sun);transform:rotate(1deg)}.post:nth-child(3){background:var(--teal);transform:rotate(-1deg)}
+.studio>div{background:var(--cream);color:var(--ink);padding:25px;border:2px solid var(--ink);min-height:145px}.studio strong{display:block;font-size:28px;margin-top:25px}
+footer{padding:30px 7%;background:var(--beige);display:flex;justify-content:space-between;font:11px monospace}
+.toast{position:fixed;right:20px;bottom:20px;background:var(--ink);color:white;padding:15px 18px;display:none;z-index:50}
+@media(max-width:900px){nav{display:none}.menu{display:block;margin-left:auto}.hero,.grid2{grid-template-columns:1fr}.desk{height:390px}.choices,.pubgrid,.jobs,.studio{grid-template-columns:1fr 1fr}.wall{grid-template-columns:1fr}}
+@media(max-width:560px){.hero{padding-top:45px}.hero h1{letter-spacing:-3px}.choices,.pubgrid,.jobs,.studio{grid-template-columns:1fr}.wall{grid-template-columns:1fr}footer{display:block}footer span{display:block;margin-top:12px}}
+
+.avatar{width:78px;height:78px;border:2px solid var(--ink);border-radius:50%;background:var(--sun);display:grid;place-items:center;overflow:hidden;box-shadow:5px 5px 0 var(--ink)}
+.avatar svg{width:100%;height:100%}.avatar.small{width:44px;height:44px;box-shadow:3px 3px 0 var(--ink)}
+.creator-card{display:flex;align-items:center;gap:16px;padding:18px;background:var(--cream);border:2px solid var(--ink);box-shadow:7px 7px 0 var(--ink)}
+.creator-card .meta{flex:1}.creator-card strong{display:block;font-size:18px}.creator-card small{font:11px monospace}
+.profile-row{display:flex;align-items:center;gap:10px;margin-bottom:14px}.mini-face{width:38px;height:38px;border:2px solid var(--ink);border-radius:50%;background:var(--lav);display:grid;place-items:center;overflow:hidden}
+.palette{display:flex;gap:7px;flex-wrap:wrap;margin-top:18px}.swatch{width:28px;height:28px;border:2px solid var(--ink);border-radius:50%}.depth{background-image:linear-gradient(135deg,transparent 0 46%,#17233b16 47% 50%,transparent 51%),radial-gradient(circle at 20% 20%,#fff8 0 2px,transparent 3px);background-size:18px 18px,34px 34px}
+.workflow{margin-top:28px;padding:20px;border:2px solid var(--ink);background:var(--cream);box-shadow:7px 7px 0 var(--ink)}
+.progress-track{height:14px;border:2px solid var(--ink);background:var(--beige);overflow:hidden}.progress-fill{height:100%;width:10%;background:linear-gradient(90deg,var(--coral),var(--orange),var(--sun),var(--teal));transition:width .5s}
+.workflow-controls{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}.workflow-controls button{border:2px solid var(--ink);background:var(--paper);padding:9px 12px;font-weight:800;cursor:pointer}.workflow-controls button:hover{background:var(--sun)}
+
+/* KIRA premium editorial layer */
+.kicker{font:700 10px/1.2 monospace;letter-spacing:2.5px;text-transform:uppercase;opacity:.78}
+.editorial-intro{max-width:720px;font-size:19px;line-height:1.7}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:30px}
+.section-head p{max-width:500px;line-height:1.6}
+.art-gallery{display:grid;grid-template-columns:1.25fr .85fr .85fr;grid-template-rows:280px 220px;gap:14px}
+.art-frame{position:relative;overflow:hidden;border:2px solid var(--ink);background:#d9c8b5;box-shadow:8px 8px 0 #17233b}
+.art-frame.large{grid-row:span 2}
+.art-frame svg{width:100%;height:100%;display:block}
+.art-label{position:absolute;left:12px;bottom:12px;background:rgba(255,250,240,.94);border:1px solid var(--ink);padding:9px 11px;font:10px monospace;letter-spacing:1px}
+.art-frame:hover{transform:translateY(-4px) rotate(-.3deg);transition:.25s}
+.artist-directory{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+.artist-card{background:var(--cream);border:2px solid var(--ink);padding:20px;display:grid;grid-template-columns:70px 1fr;gap:15px;box-shadow:6px 6px 0 var(--ink)}
+.artist-card .avatar{width:68px;height:68px;box-shadow:3px 3px 0 var(--ink)}
+.artist-card h3{margin:0 0 5px;font-size:20px}.artist-card p{font-size:12px;line-height:1.5;margin:0 0 12px}
+.pill{display:inline-block;padding:5px 8px;border:1px solid var(--ink);font:9px monospace;margin:2px;background:var(--paper)}
+.blog-grid{display:grid;grid-template-columns:1.3fr .85fr .85fr;gap:15px}
+.blog-card{background:var(--cream);border:2px solid var(--ink);padding:25px;min-height:240px;display:flex;flex-direction:column;justify-content:space-between}
+.blog-card.featured{background:var(--ink);color:var(--paper);box-shadow:9px 9px 0 var(--coral)}
+.blog-card h3{font-family:Georgia,serif;font-size:29px;line-height:1.05;margin:15px 0}
+.blog-card p{line-height:1.6;font-size:13px}
+.blog-card button{align-self:flex-start;border:0;background:none;text-decoration:underline;font-weight:800;cursor:pointer;color:inherit;padding:0}
+.stats-strip{display:grid;grid-template-columns:repeat(4,1fr);border:2px solid var(--ink);background:var(--cream)}
+.stat{padding:24px;border-right:1px solid var(--ink)}.stat:last-child{border-right:0}.stat strong{display:block;font:700 30px Georgia,serif}.stat span{font:10px monospace}
+.brief{display:grid;grid-template-columns:1fr 1fr;gap:15px}.brief-card{border:2px solid var(--ink);background:var(--cream);padding:24px}.brief-card ul{padding-left:18px;line-height:1.8}
+.tone-panel{background:var(--plum);color:#fffaf0;border:2px solid var(--ink);padding:28px;box-shadow:9px 9px 0 var(--ink)}
+@media(max-width:900px){.art-gallery{grid-template-columns:1fr 1fr;grid-template-rows:260px 220px}.artist-directory,.blog-grid,.brief{grid-template-columns:1fr 1fr}.stats-strip{grid-template-columns:1fr 1fr}.stat:nth-child(2){border-right:0}}
+@media(max-width:560px){.art-gallery,.artist-directory,.blog-grid,.brief,.stats-strip{grid-template-columns:1fr}.art-frame.large{grid-row:auto}.stat{border-right:0;border-bottom:1px solid var(--ink)}}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">K KIRA</div>
+<nav>
+<a href="#home">Home</a><a href="#artwork">Artwork</a><a href="#discover">Workflow</a><a href="#artists">Artists</a><a href="#jobs">Jobs</a><a href="#journal">Journal</a><a href="#publish">Publish</a><a href="#review">Review Room</a><a href="#community">Community</a><a href="#studio">My Studio</a>
+</nav><button class="menu" onclick="toggleNav()">☰</button>
+</header>
+
+<main>
+<section class="hero" id="home">
+<div>
+<div class="eyebrow">A CREATIVE CAREER STUDIO FOR ADULT ARTISTS</div>
+<h1>Your art deserves a <em>career.</em></h1>
+<p class="lead">Create boldly, build a professional portfolio, find serious opportunities, publish your work, and grow a sustainable creative career.</p>
+
+<div class="creator-card depth" style="margin-top:22px;max-width:570px">
+  <div class="avatar">
+    <svg viewBox="0 0 100 100" role="img" aria-label="Fictional artist portrait">
+      <circle cx="50" cy="52" r="39" fill="#d8899b"/>
+      <path d="M14 48 Q18 12 50 12 Q84 12 88 48 Q70 27 50 31 Q30 28 14 48" fill="#17233b"/>
+      <circle cx="36" cy="51" r="4" fill="#17233b"/><circle cx="64" cy="51" r="4" fill="#17233b"/>
+      <path d="M39 70 Q50 78 61 70" fill="none" stroke="#17233b" stroke-width="3"/>
+      <path d="M22 92 Q50 72 78 92" fill="#3c9d9b"/>
+    </svg>
+  </div>
+  <div class="meta"><strong>Kira Morgan</strong><small>Independent artist · 8 years creating · 3 projects in progress</small><div class="palette">
+    <span class="swatch" style="background:var(--coral)"></span><span class="swatch" style="background:var(--sun)"></span><span class="swatch" style="background:var(--teal)"></span><span class="swatch" style="background:var(--plum)"></span><span class="swatch" style="background:var(--sky)"></span>
+  </div></div>
+</div>
+<div class="buttons"><a class="btn primary" href="#discover">Start Your Journey →</a><a class="btn secondary" href="#jobs">Explore Opportunities</a></div>
+</div>
+<div class="desk" aria-label="Comic artist desk">
+<div class="comic"><div class="comicgrid"><div class="panel"><div class="face"></div></div><div class="panel"><div class="face"></div></div><div class="panel"><div class="face"></div></div><div class="panel"><div class="face"></div></div></div><div class="bubble">Every masterpiece<br>started as a sketch.</div></div>
+<div class="sticky">TELL<br>YOUR<br>STORY.</div>
+</div>
+</section>
+
+
+<section id="artwork">
+<div class="section-head">
+  <div><div class="kicker">Selected Work / 2026</div><h2>Art that speaks before the <em>caption.</em></h2></div>
+  <p class="editorial-intro">A curated visual wall for finished pages, character studies, covers, editorial illustration and personal projects. Every piece has a story, context and creator credit.</p>
+</div>
+<div class="art-gallery">
+  <div class="art-frame large">
+    <svg viewBox="0 0 700 760" preserveAspectRatio="xMidYMid slice">
+      <defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#1b2438"/><stop offset=".55" stop-color="#725b8f"/><stop offset="1" stop-color="#d8899b"/></linearGradient></defs>
+      <rect width="700" height="760" fill="url(#g1)"/>
+      <circle cx="500" cy="210" r="150" fill="#f2c94c" opacity=".85"/>
+      <path d="M0 620 C170 490 250 680 390 540 C500 430 560 520 700 390 L700 760 L0 760Z" fill="#17233b"/>
+      <path d="M120 540 Q230 300 360 430 Q420 510 500 650 L170 690Z" fill="#e76f61"/>
+      <circle cx="290" cy="360" r="75" fill="#f1d0b2" stroke="#17233b" stroke-width="12"/>
+      <path d="M215 345 Q290 220 370 335 Q310 280 235 370Z" fill="#17233b"/>
+      <path d="M245 400 Q290 420 335 400" fill="none" stroke="#17233b" stroke-width="8"/>
+      <path d="M90 90 L610 90" stroke="#fffaf0" stroke-width="3" opacity=".6"/>
+    </svg><div class="art-label">“NOCTURNE / 04” · KIRA MORGAN</div>
+  </div>
+  <div class="art-frame">
+    <svg viewBox="0 0 500 400" preserveAspectRatio="xMidYMid slice">
+      <rect width="500" height="400" fill="#e9ddc8"/><rect x="55" y="55" width="390" height="290" fill="#3c9d9b"/>
+      <circle cx="250" cy="180" r="92" fill="#d8899b"/><path d="M145 170 Q170 60 255 75 Q340 65 360 170 Q300 125 250 145 Q200 125 145 170" fill="#17233b"/>
+      <circle cx="220" cy="185" r="7"/><circle cx="280" cy="185" r="7"/><path d="M220 230 Q250 250 280 230" fill="none" stroke="#17233b" stroke-width="5"/>
+    </svg><div class="art-label">CHARACTER STUDY / MIRA</div>
+  </div>
+  <div class="art-frame">
+    <svg viewBox="0 0 500 400" preserveAspectRatio="xMidYMid slice">
+      <rect width="500" height="400" fill="#4778a9"/><circle cx="120" cy="90" r="90" fill="#f2c94c"/><circle cx="380" cy="310" r="130" fill="#e76f61"/>
+      <path d="M0 320 Q100 170 220 290 T500 160 L500 400 L0 400Z" fill="#17233b"/>
+      <path d="M190 280 Q250 120 315 280" fill="none" stroke="#fffaf0" stroke-width="20"/>
+    </svg><div class="art-label">EDITORIAL COVER / AFTER RAIN</div>
+  </div>
+  <div class="art-frame">
+    <svg viewBox="0 0 500 400" preserveAspectRatio="xMidYMid slice">
+      <rect width="500" height="400" fill="#725b8f"/><path d="M70 340 Q110 80 250 60 Q390 80 430 340" fill="#f7f0e3"/>
+      <path d="M120 280 Q250 120 380 280" fill="none" stroke="#d96b27" stroke-width="34"/>
+      <circle cx="250" cy="170" r="52" fill="#91b9a0" stroke="#17233b" stroke-width="9"/>
+    </svg><div class="art-label">PERSONAL SERIES / 07</div>
+  </div>
+  <div class="art-frame">
+    <svg viewBox="0 0 500 400" preserveAspectRatio="xMidYMid slice">
+      <rect width="500" height="400" fill="#f2c94c"/><path d="M0 330 L130 120 L230 300 L350 90 L500 330 L500 400 L0 400Z" fill="#17233b"/>
+      <circle cx="355" cy="150" r="58" fill="#e76f61"/><path d="M320 150 L350 120 L390 160" fill="none" stroke="#fffaf0" stroke-width="9"/>
+    </svg><div class="art-label">THUMBNAILS / MOUNTAIN CITY</div>
+  </div>
+</div>
+</section>
+<section class="dark" id="discover">
+<div class="eyebrow">QUICK START</div><h2>Where are you <em>in your career?</em></h2>
+<div class="choices">
+<button class="choice" onclick="choose('idea')">01 I have a new project</button><button class="choice" onclick="choose('making')">02 I'm building my body of work</button><button class="choice" onclick="choose('portfolio')">03 I need a stronger portfolio</button><button class="choice" onclick="choose('work')">04 I want paid work</button><button class="choice" onclick="choose('publish')">05 I want to publish professionally</button><button class="choice" onclick="choose('stuck')">06 I need a career reset</button>
+</div><div class="choiceResult" id="choiceResult">Pick a card and KIRA will guide your next professional move.</div>
+</section>
+
+<section>
+<div class="eyebrow">ARTIST WORKFLOW</div><h2>From first draft to <em>professional release.</em></h2>
+<div class="journey" id="journey"></div><p id="stageInfo" style="margin-top:20px;font-weight:700">Click a stage to see what to focus on next.</p>
+<div class="workflow" id="workflow">
+  <div class="profile-row">
+    <div class="mini-face">
+      <svg viewBox="0 0 100 100"><circle cx="50" cy="52" r="39" fill="#f2c94c"/><path d="M12 48 Q20 8 52 13 Q84 8 90 48 Q69 29 50 31 Q30 27 12 48" fill="#725b8f"/><circle cx="36" cy="52" r="4"/><circle cx="64" cy="52" r="4"/><path d="M40 70 Q50 77 60 70" fill="none" stroke="#17233b" stroke-width="3"/></svg>
+    </div>
+    <div><b id="workflowTitle">IDEA</b><br><small id="workflowDesc">Write the premise and define the emotional hook.</small></div>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="workflowFill"></div></div>
+  <div class="workflow-controls">
+    <button onclick="workflowPrev()">← Previous</button>
+    <button onclick="workflowNext()">Next stage →</button>
+    <button onclick="workflowAuto()">▶ Play workflow</button>
+  </div>
+</div>
+
+</section>
+
+<section class="grid2" id="review">
+<div><div class="eyebrow">THE REVIEW ROOM</div><h2>Want another pair of <em>eyes?</em></h2><p style="font-size:18px;line-height:1.6">Upload artwork and get structured, constructive AI-assisted feedback. This preview keeps the artwork at the center rather than turning the feature into a generic chatbot.</p></div>
+<div class="card">
+<label>ARTWORK<input type="file" id="art" accept="image/*"></label>
+<label>REVIEW TYPE<select id="rtype"><option>Comic Page</option><option>Character Design</option><option>Portfolio</option><option>Cover</option></select></label>
+<label>REVIEWER<select id="reviewer"><option>Friendly Mentor</option><option>Comic Editor</option><option>Art Director</option><option>Portfolio Reviewer</option></select></label>
+<button class="btn primary" onclick="review()">Start Review K</button><div class="result" id="reviewResult"></div>
+<div style="margin-top:20px;padding:16px;border:2px dashed var(--ink);background:var(--paper)">
+  <b>Professional review lens</b>
+  <p style="margin:7px 0 0;font-size:13px;line-height:1.5">KIRA focuses on visual clarity, portfolio readiness, client communication, consistency and next-step decisions. AI guidance is supportive feedback, not certification.</p>
+</div>
+</div>
+</section>
+
+
+<section style="background:var(--cream2)">
+<div class="eyebrow">BUILT FOR WORKING ARTISTS</div>
+<h2>Less noise. More <em>professional momentum.</em></h2>
+<div class="pubgrid">
+  <div class="pub"><b>Portfolio Direction</b><p>Choose work that supports the kind of commissions, publishing and collaborations you want next.</p><small>Positioning · Curation · Presentation</small></div>
+  <div class="pub"><b>Career Tools</b><p>Track applications, opportunities, rates, deadlines and your professional materials in one place.</p><small>Jobs · Contracts · Deliverables</small></div>
+  <div class="pub"><b>Publishing Support</b><p>Organize releases, formats, credits, promotional assets and audience-building steps.</p><small>Release · Audience · Ownership</small></div>
+  <div class="pub"><b>Artist Network</b><p>Meet other adult professionals for feedback, collaborations, referrals and creative partnerships.</p><small>Community · Collaboration · Feedback</small></div>
+</div>
+</section>
+<section id="publish" style="background:var(--beige)">
+<div class="eyebrow">PUBLISHING CENTER</div><h2>Where should your <em>comic live?</em></h2>
+<div class="pubgrid"><div class="pub"><b>Vertical Comics</b><p>Best for scrolling-first storytelling and mobile readers.</p><small>Format · Audience · Monetization</small></div><div class="pub"><b>Traditional Comics</b><p>Best for page-based sequential storytelling and print.</p><small>Format · Difficulty · Trade-offs</small></div><div class="pub"><b>Personal Website</b><p>Best for owning your presentation and portfolio.</p><small>Control · Branding · Maintenance</small></div><div class="pub"><b>Crowdfunding</b><p>Best for funding and validating a specific project.</p><small>Community · Campaign · Fulfilment</small></div></div>
+</section>
+
+<section id="jobs">
+<div class="eyebrow">JOB CENTER</div><h2>Turn your craft into <em>paid work.</em></h2>
+<div class="jobs">
+<div class="job"><span class="tag">BEGINNER FRIENDLY</span><h3>Comic Artist</h3><p>Moonbeam Studio · Freelance · Remote</p><button class="save" onclick="save(this)">Save</button></div>
+<div class="job"><span class="tag">PAID</span><h3>Character Artist</h3><p>Little Lantern Games · Part-time · Remote</p><button class="save" onclick="save(this)">Save</button></div>
+<div class="job"><span class="tag">FREELANCE</span><h3>Colorist</h3><p>Paper Kite Comics · Contract · Remote</p><button class="save" onclick="save(this)">Save</button></div>
+<div class="job"><span class="tag">REMOTE</span><h3>Letterer</h3><p>Northstar Press · Freelance · Remote</p><button class="save" onclick="save(this)">Save</button></div>
+</div><p style="font:11px monospace">Demo opportunities for the KIRA preview — verify real listings before production.</p>
+</section>
+
+
+<section id="artists" style="background:var(--cream2)">
+<div class="section-head">
+ <div><div class="kicker">Artist Directory</div><h2>Meet the people behind the <em>work.</em></h2></div>
+ <p>Professional profiles with selected work, disciplines, experience and collaboration interests. Demo profiles below are fictional.</p>
+</div>
+<div class="artist-directory">
+ <div class="artist-card"><div class="avatar"><svg viewBox="0 0 100 100"><circle cx="50" cy="52" r="39" fill="#d8899b"/><path d="M12 48 Q20 8 52 13 Q83 8 90 48 Q70 28 50 31 Q30 27 12 48" fill="#17233b"/><circle cx="36" cy="52" r="4"/><circle cx="64" cy="52" r="4"/></svg></div><div><h3>Leah Park</h3><p>Illustrator & sequential artist · 9 yrs</p><span class="pill">EDITORIAL</span><span class="pill">COVERS</span></div></div>
+ <div class="artist-card"><div class="avatar"><svg viewBox="0 0 100 100"><circle cx="50" cy="52" r="39" fill="#75a9d8"/><path d="M12 46 Q24 10 50 13 Q82 9 90 46 Q70 27 50 31 Q30 27 12 46" fill="#725b8f"/><circle cx="36" cy="52" r="4"/><circle cx="64" cy="52" r="4"/></svg></div><div><h3>Jon Bell</h3><p>Comic artist & art director · 12 yrs</p><span class="pill">COMICS</span><span class="pill">DIRECTION</span></div></div>
+ <div class="artist-card"><div class="avatar"><svg viewBox="0 0 100 100"><circle cx="50" cy="52" r="39" fill="#91b9a0"/><path d="M13 47 Q18 9 50 12 Q84 10 89 47 Q67 29 50 31 Q30 28 13 47" fill="#4778a9"/><circle cx="36" cy="52" r="4"/><circle cx="64" cy="52" r="4"/></svg></div><div><h3>Amara Cole</h3><p>Character designer · 7 yrs</p><span class="pill">CHARACTERS</span><span class="pill">GAMES</span></div></div>
+</div>
+</section>
+
+<section id="journal">
+<div class="section-head">
+ <div><div class="kicker">KIRA Journal</div><h2>Ideas for the <em>long game.</em></h2></div>
+ <p>Practical essays and studio notes for artists building careers, not chasing algorithms.</p>
+</div>
+<div class="blog-grid">
+ <article class="blog-card featured"><div><div class="kicker">CAREER / 08 MIN READ</div><h3>How to make a portfolio feel intentional, not crowded.</h3><p>Why professional artists often need fewer pieces, stronger sequencing and clearer context.</p></div><button onclick="readBlog('Portfolio')">Read article →</button></article>
+ <article class="blog-card"><div><div class="kicker">BUSINESS / 06 MIN READ</div><h3>Pricing creative work without losing the relationship.</h3><p>Scope, revisions, usage and communication are part of the artwork's value.</p></div><button onclick="readBlog('Pricing')">Read article →</button></article>
+ <article class="blog-card"><div><div class="kicker">PROCESS / 05 MIN READ</div><h3>A sustainable studio rhythm for independent artists.</h3><p>Build a workflow that leaves room for making, admin, learning and rest.</p></div><button onclick="readBlog('Workflow')">Read article →</button></article>
+</div>
+<div class="stats-strip" style="margin-top:22px">
+ <div class="stat"><strong>4.8k</strong><span>ARTISTS IN KIRA COMMUNITY</span></div>
+ <div class="stat"><strong>620</strong><span>PORTFOLIOS REVIEWED</span></div>
+ <div class="stat"><strong>1.9k</strong><span>OPPORTUNITIES TRACKED</span></div>
+ <div class="stat"><strong>81%</strong><span>CREATOR RETURN RATE</span></div>
+</div>
+</section>
+<section class="community" id="community">
+<div><div class="eyebrow">THE STUDIO WALL</div><h2>Make work. Share knowledge. <em>Find your people.</em></h2><p style="font-size:18px;line-height:1.6">Share work, exchange professional feedback, find collaborators, discuss contracts and publishing, and learn alongside experienced adult creators.</p></div>
+<div class="wall"><div class="post"><div class="profile-row"><div class="mini-face"><svg viewBox="0 0 100 100"><circle cx="50" cy="52" r="39" fill="#e76f61"/><path d="M14 45 Q24 9 52 14 Q82 8 89 45 Q68 29 50 32 Q30 28 14 45" fill="#17233b"/><circle cx="36" cy="52" r="4"/><circle cx="64" cy="52" r="4"/></svg></div><small>@luna_draws · 2h</small></div><b>SHOW YOUR WORK</b><h3>Drop your latest page.</h3>♥ 124 · 18 comments</div><div class="post"><div class="profile-row"><div class="mini-face"><svg viewBox="0 0 100 100"><circle cx="50" cy="52" r="39" fill="#91b9a0"/><path d="M13 47 Q18 9 50 12 Q84 10 89 47 Q67 29 50 31 Q30 28 13 47" fill="#725b8f"/><circle cx="36" cy="52" r="4"/><circle cx="64" cy="52" r="4"/></svg></div><small>@inkbydoodle · 4h</small></div><b>COLLABORATION</b><h3>Writer looking for an artist.</h3>♥ 98 · 12 comments</div><div class="post"><div class="profile-row"><div class="mini-face"><svg viewBox="0 0 100 100"><circle cx="50" cy="52" r="39" fill="#f2c94c"/><path d="M13 47 Q18 10 50 13 Q84 10 89 47 Q68 28 50 31 Q29 27 13 47" fill="#4778a9"/><circle cx="36" cy="52" r="4"/><circle cx="64" cy="52" r="4"/></svg></div><small>@mangamaker · 1d</small></div><b>STUDENT CORNER</b><h3>How do you build a first portfolio?</h3>♥ 210 · 23 comments</div></div>
+</section>
+
+
+<section>
+<div class="brief">
+ <div class="tone-panel"><div class="kicker">KIRA PRINCIPLE</div><h2 style="margin-top:15px">Your work is the center. The platform stays <em>quiet.</em></h2><p style="line-height:1.7">KIRA is designed for adult artists who already take their craft seriously and want better systems for presenting, improving and monetizing their work.</p></div>
+ <div class="brief-card"><div class="kicker">TODAY'S STUDIO PLAN</div><ul><li>Finish 2 portfolio pages</li><li>Review one client brief</li><li>Send 3 applications</li><li>Publish one studio note</li><li>Update availability & rates</li></ul><button class="btn primary" onclick="toast('Studio plan saved')">Save plan</button></div>
+</div>
+</section>
+<section id="studio">
+<div class="eyebrow">MY STUDIO</div><h2>Your professional <em>workbench.</em></h2>
+<div class="studio">
+<div><b>COMIC PROJECTS</b><strong>3</strong><small>“Moonlit Metro” · “Paper Hearts” · “North Star”</small></div>
+<div><b>PORTFOLIO</b><strong>12 pieces</strong><small>6 comic pages · 3 characters · 3 illustrations</small></div>
+<div><b>PUBLISHING</b><strong>40%</strong><small>Cover finished · 8/20 pages ready</small></div>
+<div><b>AI REVIEWS</b><strong>5</strong><small>Average guidance score · 81/100</small></div>
+</div>
+<div class="creator-card depth" style="margin-top:25px">
+  <div class="avatar small">
+    <svg viewBox="0 0 100 100"><circle cx="50" cy="52" r="39" fill="#75a9d8"/><path d="M12 45 Q24 8 52 13 Q83 8 90 45 Q71 27 51 31 Q30 27 12 45" fill="#17233b"/><circle cx="36" cy="52" r="4"/><circle cx="64" cy="52" r="4"/><path d="M40 70 Q50 77 60 70" fill="none" stroke="#17233b" stroke-width="3"/></svg>
+  </div>
+  <div class="meta"><strong>KIRA community snapshot</strong><small>4,820 adult artists online · 46 feedback requests · 18 collaboration posts today</small></div>
+</div>
+</section>
+</main>
+<footer><b>KIRA</b><span>Create → Review → Portfolio → Publish → Network → Find Paid Work</span></footer>
+<div class="toast" id="toast"></div>
+<script>
+const stages=["IDEA","SCRIPT","CHARACTERS","THUMBNAILS","PENCILS","INK","COLOR","LETTERING","PORTFOLIO","PUBLISH"];
+const infos=["Define the project goal, audience, scope and professional direction.","Turn the concept into a clear production plan and deliverables.","Build a consistent visual system for characters and assets.","Plan composition, pacing and production time before rendering.","Develop clean, confident forms while protecting your schedule.","Establish line quality, hierarchy and a repeatable finishing workflow.","Build a deliberate palette that supports your visual identity.","Keep typography, dialogue and graphic elements professional and readable.","Curate work strategically around the clients or opportunities you want.","Prepare files, credits, rights information and release assets before publishing."];
+document.getElementById("journey").innerHTML=stages.map((s,i)=>`<button class="stage ${i===0?'active':''}" onclick="stage(${i},this)">${i+1}. ${s}</button>${i<9?'<span>→</span>':''}`).join("");
+let workflowIndex=0; let workflowTimer=null;
+function stage(i,b){document.querySelectorAll(".stage").forEach(x=>x.classList.remove("active"));b.classList.add("active");workflowIndex=i;updateWorkflow();document.getElementById("stageInfo").textContent=stages[i]+": "+infos[i]}
+function updateWorkflow(){document.querySelectorAll(".stage")[workflowIndex].classList.add("active");document.getElementById("workflowTitle").textContent=stages[workflowIndex];document.getElementById("workflowDesc").textContent=infos[workflowIndex];document.getElementById("workflowFill").style.width=((workflowIndex+1)/stages.length*100)+"%"}
+function workflowNext(){workflowIndex=(workflowIndex+1)%stages.length;updateWorkflow();document.getElementById("stageInfo").textContent=stages[workflowIndex]+": "+infos[workflowIndex]}
+function workflowPrev(){workflowIndex=(workflowIndex-1+stages.length)%stages.length;updateWorkflow();document.getElementById("stageInfo").textContent=stages[workflowIndex]+": "+infos[workflowIndex]}
+function workflowAuto(){if(workflowTimer){clearInterval(workflowTimer);workflowTimer=null;toast("Workflow paused");return}workflowTimer=setInterval(workflowNext,1800);toast("Workflow is playing")}
+
+function choose(x){const m={idea:"Write a one-sentence premise, then make a rough 6-panel thumbnail.",making:"Create a Comic Project and mark your current production stage.",portfolio:"Curate 6–10 strong pieces before adding more.",work:"Filter Jobs by role, remote work and beginner-friendly options.",publish:"Compare publishing formats, then start your checklist.",stuck:"Use Review Room for one focused second opinion."};document.getElementById("choiceResult").textContent=m[x]}
+function save(b){b.textContent=b.textContent.includes("Saved")?"Save":"Saved";toast(b.textContent)}
+function review(){const f=document.getElementById("art").files[0],r=document.getElementById("reviewResult");if(!f){r.textContent="Please choose an artwork image first.";return}r.innerHTML="<b>Demo AI review:</b> 78/100<br><br><b>What's working:</b> clear focal point, strong visual identity.<br><b>Could improve:</b> panel transitions and lettering breathing room.<br><b>Try next:</b> make one thumbnail pass before polishing.";toast("Review generated")}
+function readBlog(topic){toast(topic+" article opened — demo reader view");}
+function toast(t){const x=document.getElementById("toast");x.textContent=t;x.style.display="block";setTimeout(()=>x.style.display="none",1600)}
+function toggleNav(){const n=document.querySelector("nav");n.style.display=n.style.display==="flex"?"none":"flex";n.style.flexDirection="column";n.style.position="absolute";n.style.top="64px";n.style.right="5%";n.style.background="var(--paper)";n.style.padding="18px";n.style.border="2px solid var(--ink)"}
+</script>
+</body>
+</html>
